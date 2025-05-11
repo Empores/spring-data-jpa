@@ -2,8 +2,10 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/productdb
-    username: ENC(dk85BI2GmTuyS3Z3pa4tgQ==)
-    password: ENC(HkArwU7OvP4SRKGjLxy4idIiCsJmgfOH)
+   # username: ENC(dk85BI2GmTuyS3Z3pa4tgQ==)
+    #password: ENC(HkArwU7OvP4SRKGjLxy4idIiCsJmgfOH)
+    username: root
+    password: Ragasiyam2
 
   jpa:
     hibernate:

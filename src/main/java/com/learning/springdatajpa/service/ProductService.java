@@ -52,7 +52,7 @@ public class ProductService {
 
     @Cacheable(key="#id")
     public Product findById(int id){
-        return repository.findById(id).get();
+        return repository.findById(id).orElseThrow(() -> new IllegalArgumentException("Id doesnt exists"));
     }
 
     public Product findByName(String name){

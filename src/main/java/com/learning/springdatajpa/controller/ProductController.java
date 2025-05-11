@@ -1,7 +1,12 @@
 package com.learning.springdatajpa.controller;
 
+import com.learning.springdatajpa.annotation.LogRequestAndResponse;
+import com.learning.springdatajpa.annotation.TrackExecutionTime;
 import com.learning.springdatajpa.entity.Product;
 import com.learning.springdatajpa.service.ProductService;
+import io.micrometer.observation.Observation;
+import io.micrometer.observation.ObservationRegistry;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,24 +17,40 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@Slf4j
 public class ProductController {
 
     @Autowired
     private ProductService service;
 
+
+
     @PostMapping
+   // @LogRequestAndResponse
+    @TrackExecutionTime
     public Product addProduct(@RequestBody Product product){
-        return service.saveProduct(product);
+        long startTime = System.currentTimeMillis();
+        Product newProduct = null;
+            if(product.getPrice() <= 100) {
+                throw new RuntimeException("Product price should not be less than 100");
+            }
+            newProduct = service.saveProduct(product);
+            long endTime = System.currentTimeMillis();
+            log.info("addProduct method execution takes {} ms to complete",(endTime-startTime));
+        return newProduct;
     }
 
     @GetMapping
+    @TrackExecutionTime
     public List<Product> getProducts(){
         return service.findAll();
     }
 
     @GetMapping("/byid/{id}")
+    @TrackExecutionTime
     public Product getProductById(@PathVariable int id){
-        return service.findById(id);
+        return
+                service.findById(id);
     }
 
     /*
@@ -49,6 +70,7 @@ public class ProductController {
     }
 */
     @PutMapping("/{id}")
+    @LogRequestAndResponse
     public Product updateProduct(@PathVariable int id,@RequestBody Product product){
         System.out.println(product.getProductType());
         return service.updateProduct(id,product);

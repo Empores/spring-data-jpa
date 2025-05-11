@@ -12,10 +12,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@EnableJpaAuditing(auditorAwareRef = "auditorAware")
-@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
-@EnableEncryptableProperties
-@EnableCaching
+//@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+//@EnableJpaRepositories(repositoryFactoryBeanClass = EnversRevisionRepositoryFactoryBean.class)
+//@EnableEncryptableProperties
+//@EnableCaching
 public class SpringDataJpaApplication {
 
 	@Bean
